@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: db
 spec:
   selector:
     matchLabels:
-      app: mysql
+      app: db
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: mysql
+        app: db
     spec:
       containers:
       - image: "{{ .Values.image.db.repository }}:{{ .Values.image.db.tag }}"
-        name: mysql
+        name: db
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
           value: my-secret-pw
         ports:
         - containerPort: 3306
-          name: mysql
+          name: db
         volumeMounts:
         - name: db-claim0
           mountPath: /var/lib/mysql
